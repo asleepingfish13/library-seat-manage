@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Library seats manage</string>
+    <string name="huanyingnin">图书馆预约系统欢迎您</string>
+    <string name="denglu">登录</string>
+    <string name="qingshuruzhanghao">请输入账号</string>
+    <string name="qingshurumima">请输入密码</string>
+    <string name="haimeiyouzhanghao">还没有账号？</string>
+    <string name="zhuce">注册</string>
+    <string name="zhucexinzhanghao">注册新账号</string>
+    <string name="qingshuruyouxiang">请输入邮箱</string>
+    <string name="querenmima">确认密码</string>
+    <string name="yiyouzhanghao">已有账号？</string>
 </resources>

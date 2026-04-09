@@ -1,0 +1,11 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorOnSurface">
+  <!-- 圆角方框图标 -->
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M20,6H4C3.45,6 3,6.45 3,7V17C3,17.55 3.45,18 4,18H20C20.55,18 21,17.55 21,17V7C21,6.45 20.55,6 20,6ZM20,17H4V7H20V17ZM9,15L4.83,10.83l1.41,-1.41L9,12.17l6.76,-6.76l1.41,1.41L9,15Z"/>
+</vector>
