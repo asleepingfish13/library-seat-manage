@@ -11,10 +11,16 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -70,13 +76,34 @@ public class RegisterActivity extends AppCompatActivity {
     
     private boolean saveUserData(String username, String email, String password) {
         try {
-            File file = new File(getFilesDir(), "user_data.txt");
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(username + "," + email + "," + password);
-            writer.newLine();
+            File file = new File(getFilesDir(), "user_data.json");
+            JSONObject userObject = new JSONObject();
+            userObject.put("username", username);
+            userObject.put("email", email);
+            userObject.put("password", password);
+            userObject.put("reservations", new JSONArray());
+            
+            JSONArray usersArray;
+            if (file.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                reader.close();
+                usersArray = new JSONArray(builder.toString());
+            } else {
+                usersArray = new JSONArray();
+            }
+            
+            usersArray.put(userObject);
+            
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(usersArray.toString());
             writer.close();
             return true;
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             return false;
         }

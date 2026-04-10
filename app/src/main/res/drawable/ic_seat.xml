@@ -6,7 +6,7 @@
     android:tint="?attr/colorOnSurface">
   <!-- 圆润版沙发椅 -->
   <path
-      android:fillColor="@android:color/white"
+      android:fillColor="@android:color/black"
       android:pathData="
             M7,5
             Q7,4 8,4

@@ -10,4 +10,40 @@
     <string name="qingshuruyouxiang">请输入邮箱</string>
     <string name="querenmima">确认密码</string>
     <string name="yiyouzhanghao">已有账号？</string>
+    <!-- 座位信息相关 -->
+    <string name="seats_info">座位信息</string>
+    <string name="seat">座位</string>
+    <string name="no_reservation">当前没有预约</string>
+    <string name="reserved_time">已预约时间：</string>
+    <string name="reservation_success">预约成功</string>
+    <string name="reservation_failed">预约失败，请重试</string>
+    <string name="please_fill_all">请填写完整信息</string>
+    <string name="load_seats_failed">加载座位数据失败</string>
+    <!-- 预约信息相关 -->
+    <string name="reservation_info">预约信息</string>
+    <string name="no_reservations">暂无预约信息</string>
+    <!-- 个人信息相关 -->
+    <string name="profile_info">个人信息</string>
+    <string name="username">用户名：</string>
+    <string name="email">邮箱：</string>
+    <string name="not_logged_in">未登录</string>
+    <string name="logout">退出登录</string>
+    <!-- 日历选择器相关 -->
+    <string name="select_reservation_time">选择预约时间</string>
+    <string name="date">日期：</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="start_time">开始时间：</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="end_time">结束时间：</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <!-- 预约信息相关 -->
+    <string name="time">时间：</string>
+    <!-- 底部导航相关 -->
+    <string name="me">我</string>
+    <!-- 按钮相关 -->
+    <string name="reservation">预约</string>
 </resources>

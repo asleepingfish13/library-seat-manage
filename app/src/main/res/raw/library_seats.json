@@ -1,0 +1,629 @@
+{
+  "floor": 1,
+  "seats": [
+    {
+      "x": 1,
+      "y": 1,
+      "status": 1,
+      "reservations": [
+        {
+          "date": "2026.4.11",
+          "startTime": "13:00",
+          "endTime": "15:00"
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "status": 1,
+      "reservations": [
+        {
+          "date": "2026.4.11",
+          "startTime": "10:00",
+          "endTime": "12:00"
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "status": 1,
+      "reservations": [
+        {
+          "date": "2026.4.12",
+          "startTime": "09:00",
+          "endTime": "11:00"
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 1,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "status": 1,
+      "reservations": [
+        {
+          "date": "2026.4.11",
+          "startTime": "14:00",
+          "endTime": "16:00"
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 9,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 2,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 3,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 4,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 5,
+      "y": 10,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 6,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 7,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "status": 0,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 9,
+      "status": 1,
+      "reservations": []
+    },
+    {
+      "x": 10,
+      "y": 10,
+      "status": 1,
+      "reservations": []
+    }
+  ]
+}

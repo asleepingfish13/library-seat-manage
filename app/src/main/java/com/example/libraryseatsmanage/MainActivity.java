@@ -11,12 +11,18 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static JSONObject currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,27 +67,31 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean validateLogin(String username, String password) {
         try {
-            File file = new File(getFilesDir(), "user_data.txt");
+            File file = new File(getFilesDir(), "user_data.json");
             if (!file.exists()) {
                 return false;
             }
             
             BufferedReader reader = new BufferedReader(new FileReader(file));
+            StringBuilder builder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userData = line.split(",");
-                if (userData.length >= 3) {
-                    String storedUsername = userData[0];
-                    String storedPassword = userData[2];
-                    if (username.equals(storedUsername) && password.equals(storedPassword)) {
-                        reader.close();
-                        return true;
-                    }
-                }
+                builder.append(line);
             }
             reader.close();
+            
+            JSONArray usersArray = new JSONArray(builder.toString());
+            for (int i = 0; i < usersArray.length(); i++) {
+                JSONObject userObject = usersArray.getJSONObject(i);
+                String storedUsername = userObject.getString("username");
+                String storedPassword = userObject.getString("password");
+                if (username.equals(storedUsername) && password.equals(storedPassword)) {
+                    currentUser = userObject;
+                    return true;
+                }
+            }
             return false;
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             return false;
         }
