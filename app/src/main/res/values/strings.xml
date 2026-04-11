@@ -46,4 +46,12 @@
     <string name="me">我</string>
     <!-- 按钮相关 -->
     <string name="reservation">预约</string>
+    <!-- 签到相关 -->
+    <string name="checkin">签到</string>
+    <string name="checkout">签退</string>
+    <string name="checkin_success">签到成功</string>
+    <string name="checkout_success">签退成功</string>
+    <string name="no_reservation_to_checkin">没有可签到的预约</string>
+    <string name="no_reservation_to_checkout">没有可签退的预约</string>
+    <string name="reservation_expired">预约已过期</string>
 </resources>

@@ -70,6 +70,16 @@
 
     </LinearLayout>
 
+    <!-- 签到/签退按钮 -->
+    <Button
+        android:id="@+id/btn_checkin_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/checkin"
+        android:textSize="16sp"
+        android:layout_marginTop="32dp"
+        />
+
     <!-- 退出登录按钮 -->
     <Button
         android:id="@+id/btn_logout"
@@ -77,6 +87,7 @@
         android:layout_height="wrap_content"
         android:text="@string/logout"
         android:textSize="16sp"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="16dp"
+        />
 
 </LinearLayout>
