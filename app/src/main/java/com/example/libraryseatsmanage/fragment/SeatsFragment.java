@@ -32,6 +32,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
 
 public class SeatsFragment extends Fragment {
 
@@ -85,14 +86,30 @@ public class SeatsFragment extends Fragment {
             // 清空之前的视图
             gridLayout.removeAllViews();
             
-            InputStream inputStream = getResources().openRawResource(R.raw.library_seats);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder builder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
+            String jsonString;
+            // 优先读取我们写入的座位数据文件
+            File seatsFile = new File(getContext().getFilesDir(), "library_seats.json");
+            if (seatsFile.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(seatsFile));
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                reader.close();
+                jsonString = builder.toString();
+            } else {
+                // 如果文件不存在，从raw资源中读取
+                InputStream inputStream = getResources().openRawResource(R.raw.library_seats);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                reader.close();
+                jsonString = builder.toString();
             }
-            String jsonString = builder.toString();
 
             JSONObject jsonObject = new JSONObject(jsonString);
             int floor = jsonObject.getInt("floor");
@@ -232,15 +249,19 @@ public class SeatsFragment extends Fragment {
                     
                     for (int j = 0; j < userReservationsArray.length(); j++) {
                         JSONObject reservationObj = userReservationsArray.getJSONObject(j);
-                        String seatId = reservationObj.getString("seatId");
-                        // 解析座位ID，格式为"x-y"
-                        String[] parts = seatId.split("-");
-                        if (parts.length == 2) {
-                            int reservedX = Integer.parseInt(parts[0]);
-                            int reservedY = Integer.parseInt(parts[1]);
-                            
-                            if (reservedX == x && reservedY == y) {
-                                reservationsArray.put(reservationObj);
+                        // 过滤掉已签退的预约
+                        boolean isCheckedOut = reservationObj.optBoolean("checkedOut", false);
+                        if (!isCheckedOut) {
+                            String seatId = reservationObj.getString("seatId");
+                            // 解析座位ID，格式为"x-y"
+                            String[] parts = seatId.split("-");
+                            if (parts.length == 2) {
+                                int reservedX = Integer.parseInt(parts[0]);
+                                int reservedY = Integer.parseInt(parts[1]);
+                                
+                                if (reservedX == x && reservedY == y) {
+                                    reservationsArray.put(reservationObj);
+                                }
                             }
                         }
                     }
@@ -266,6 +287,47 @@ public class SeatsFragment extends Fragment {
             final EditText etEndMinute = dialogView.findViewById(R.id.et_end_minute);
             Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
             Button btnConfirm = dialogView.findViewById(R.id.btn_confirm);
+
+            // 自动填充当前日期和最近的整10分钟时间
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1; // 月份从0开始，需要+1
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            
+            // 计算最近的整10分钟时间
+            int roundedMinute = ((minute + 5) / 10) * 10;
+            if (roundedMinute == 60) {
+                roundedMinute = 0;
+                hour += 1;
+                if (hour == 24) {
+                    hour = 0;
+                    // 日期加一天
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH) + 1;
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
+                }
+            }
+            
+            // 填充日期
+            etYear.setText(String.valueOf(year));
+            etMonth.setText(String.valueOf(month));
+            etDay.setText(String.valueOf(day));
+            
+            // 填充开始时间（最近的整10分钟）
+            etStartHour.setText(String.valueOf(hour));
+            etStartMinute.setText(roundedMinute < 10 ? "0" + roundedMinute : String.valueOf(roundedMinute));
+            
+            // 填充结束时间（开始时间+2小时）
+            int endHour = hour + 2;
+            int endMinute = roundedMinute;
+            if (endHour >= 24) {
+                endHour -= 24;
+            }
+            etEndHour.setText(String.valueOf(endHour));
+            etEndMinute.setText(endMinute < 10 ? "0" + endMinute : String.valueOf(endMinute));
 
             final android.app.AlertDialog dialog = builder.create();
 
@@ -391,20 +453,24 @@ public class SeatsFragment extends Fragment {
                 
                 for (int j = 0; j < reservationsArray.length(); j++) {
                     JSONObject reservationObj = reservationsArray.getJSONObject(j);
-                    String seatId = reservationObj.getString("seatId");
-                    // 解析座位ID，格式为"x-y"
-                    String[] parts = seatId.split("-");
-                    if (parts.length == 2) {
-                        int x = Integer.parseInt(parts[0]) - 1; // 转换为0-based索引
-                        int y = Integer.parseInt(parts[1]) - 1;
-                        
-                        // 更新座位图标，标记为已预约
-                        if (x >= 0 && x < gridLayout.getRowCount() && y >= 0 && y < gridLayout.getColumnCount()) {
-                            View seat = gridLayout.getChildAt(x * gridLayout.getColumnCount() + y);
-                            if (seat instanceof ImageButton) {
-                                ImageButton seatButton = (ImageButton) seat;
-                                // 可以设置不同的图标或颜色来表示预约状态
-                                seatButton.setColorFilter(0xFFFF0000); // 红色表示已预约
+                    // 检查预约是否已经被签退
+                    boolean isCheckedOut = reservationObj.optBoolean("checkedOut", false);
+                    if (!isCheckedOut) {
+                        String seatId = reservationObj.getString("seatId");
+                        // 解析座位ID，格式为"x-y"
+                        String[] parts = seatId.split("-");
+                        if (parts.length == 2) {
+                            int x = Integer.parseInt(parts[0]) - 1; // 转换为0-based索引
+                            int y = Integer.parseInt(parts[1]) - 1;
+                            
+                            // 更新座位图标，标记为已预约
+                            if (x >= 0 && x < gridLayout.getRowCount() && y >= 0 && y < gridLayout.getColumnCount()) {
+                                View seat = gridLayout.getChildAt(x * gridLayout.getColumnCount() + y);
+                                if (seat instanceof ImageButton) {
+                                    ImageButton seatButton = (ImageButton) seat;
+                                    // 可以设置不同的图标或颜色来表示预约状态
+                                    seatButton.setColorFilter(0xFFFF0000); // 红色表示已预约
+                                }
                             }
                         }
                     }
