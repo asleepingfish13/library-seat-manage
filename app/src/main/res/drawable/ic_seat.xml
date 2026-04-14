@@ -4,37 +4,88 @@
     android:viewportWidth="24"
     android:viewportHeight="24"
     android:tint="?attr/colorOnSurface">
-  <!-- 圆润版沙发椅 -->
-  <path
-      android:fillColor="@android:color/black"
-      android:pathData="
-            M7,5
-            Q7,4 8,4
-            L16,4
-            Q17,4 17,5
-            L19,8
-            Q19,9 19,10
-            L19,15
-            Q19,16 18,16
-            L17,17
-            Q16,18 15,18
-            L9,18
-            Q8,18 7,17
-            L6,16
-            Q5,16 5,15
-            L5,10
-            Q5,9 5,8
-            L7,5 Z
 
-            M9,18
-            L9,20
-            L11,20
-            L11,18
-            L9,18 Z
+    <!-- 单人沙发图标 - 24dp -->
+    <!-- 精确匹配原图几何结构 -->
 
-            M13,18
-            L13,20
-            L15,20
-            L15,18
-            L13,18 Z" />
+    <!-- 靠背顶部 -->
+    <path
+        android:pathData="M4,4 L20,4 L20,6 L4,6 Z"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 靠背两侧垂直线 -->
+    <path
+        android:pathData="M4,6 L4,9 L6,9"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <path
+        android:pathData="M20,6 L20,9 L18,9"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 左扶手 -->
+    <path
+        android:pathData="M2,9 L6,9 L6,11 L2,11 L2,18 L6,18"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 右扶手 -->
+    <path
+        android:pathData="M22,9 L18,9 L18,11 L22,11 L22,18 L18,18"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 座面 -->
+    <path
+        android:pathData="M6,13 L18,13"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 底座横梁 -->
+    <path
+        android:pathData="M6,18 L18,18"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 左腿 -->
+    <path
+        android:pathData="M2,18 L2,21 L6,21"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
+    <!-- 右腿 -->
+    <path
+        android:pathData="M22,18 L22,21 L18,21"
+        android:strokeColor="#4A4A4A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"/>
+
 </vector>
