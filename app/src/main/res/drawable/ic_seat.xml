@@ -72,7 +72,7 @@
 
     <!-- 左腿 -->
     <path
-        android:pathData="M2,18 L2,21 L6,21"
+        android:pathData="M2,18 L2,21 L6,21 L6,18 Z"
         android:strokeColor="#4A4A4A"
         android:strokeWidth="2"
         android:fillColor="#00000000"
@@ -81,7 +81,7 @@
 
     <!-- 右腿 -->
     <path
-        android:pathData="M22,18 L22,21 L18,21"
+        android:pathData="M22,18 L22,21 L18,21 L18,18 Z"
         android:strokeColor="#4A4A4A"
         android:strokeWidth="2"
         android:fillColor="#00000000"
