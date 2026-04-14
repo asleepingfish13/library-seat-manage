@@ -402,8 +402,25 @@ public class ReservationFragment extends Fragment {
             // 查找并更新座位信息
             for (int i = 0; i < seatsArray.length(); i++) {
                 JSONObject seat = seatsArray.getJSONObject(i);
-                String currentSeatId = seat.getInt("x") + "-" + seat.getInt("y");
-                if (currentSeatId.equals(seatId)) {
+                // 解析座位ID，格式为"floor-x-y"
+                String[] parts = seatId.split("-");
+                boolean seatMatch = false;
+                
+                if (parts.length == 3) {
+                    // 新格式
+                    String currentSeatId = seat.getInt("x") + "-" + seat.getInt("y");
+                    if (currentSeatId.equals(parts[1] + "-" + parts[2])) {
+                        seatMatch = true;
+                    }
+                } else {
+                    // 旧格式
+                    String currentSeatId = seat.getInt("x") + "-" + seat.getInt("y");
+                    if (currentSeatId.equals(seatId)) {
+                        seatMatch = true;
+                    }
+                }
+                
+                if (seatMatch) {
                     JSONArray reservationsArray = seat.getJSONArray("reservations");
                     JSONArray newReservationsArray = new JSONArray();
                     
@@ -428,7 +445,13 @@ public class ReservationFragment extends Fragment {
             
             // 写回座位数据到文件
             // 注意：由于raw资源是只读的，我们需要将数据写入到其他位置
-            File seatsFile = new File(getContext().getFilesDir(), "library_seats.json");
+            // 根据座位ID确定楼层
+            String floor = "1";
+            String[] parts = seatId.split("-");
+            if (parts.length == 3) {
+                floor = parts[0];
+            }
+            File seatsFile = new File(getContext().getFilesDir(), "library_seats_floor" + floor + ".json");
             FileWriter writer = new FileWriter(seatsFile);
             writer.write(seatsData.toString());
             writer.close();

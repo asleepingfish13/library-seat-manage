@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.view.MotionEvent;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
@@ -38,7 +42,11 @@ public class SeatsFragment extends Fragment {
 
     private GridLayout gridLayout;
     private ZoomControls zoomControls;
+    private Spinner floorSpinner;
+    private int currentFloor = 1;
     private float scale = 1.0f;
+    private float lastX, lastY;
+    private boolean isDragging = false;
 
     @Nullable
     @Override
@@ -46,8 +54,10 @@ public class SeatsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_seats, container, false);
         gridLayout = view.findViewById(R.id.grid_layout);
         zoomControls = view.findViewById(R.id.zoom_controls);
-        loadSeatsData();
+        floorSpinner = view.findViewById(R.id.floor_spinner);
+        setupFloorSpinner();
         setupZoomControls();
+        setupTouchListener();
         return view;
     }
     
@@ -55,6 +65,73 @@ public class SeatsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadSeatsData(); // 重新加载座位数据，确保显示最新的预约状态
+    }
+    
+    private void setupFloorSpinner() {
+        // 创建楼层数组
+        String[] floors = {"1层", "2层", "3层", "4层"};
+        
+        // 创建适配器
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, floors);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        
+        // 设置适配器
+        floorSpinner.setAdapter(adapter);
+        
+        // 设置默认选中第一层
+        floorSpinner.setSelection(0);
+        
+        // 设置选择监听器
+        floorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currentFloor = position + 1; // 楼层从1开始
+                loadSeatsData(); // 加载对应楼层的座位数据
+            }
+            
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 不做处理
+            }
+        });
+    }
+    
+    private void setupTouchListener() {
+        gridLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        lastX = event.getRawX();
+                        lastY = event.getRawY();
+                        isDragging = true;
+                        v.getParent().requestDisallowInterceptTouchEvent(true); // 防止父容器拦截触摸事件
+                        return true;
+                    case MotionEvent.ACTION_MOVE:
+                        if (isDragging) {
+                            float deltaX = event.getRawX() - lastX;
+                            float deltaY = event.getRawY() - lastY;
+                            
+                            // 更新网格布局的位置
+                            float currentX = gridLayout.getX();
+                            float currentY = gridLayout.getY();
+                            gridLayout.setX(currentX + deltaX);
+                            gridLayout.setY(currentY + deltaY);
+                            
+                            lastX = event.getRawX();
+                            lastY = event.getRawY();
+                            return true;
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        isDragging = false;
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
     }
     
     private void setupZoomControls() {
@@ -88,7 +165,7 @@ public class SeatsFragment extends Fragment {
             
             String jsonString;
             // 优先读取我们写入的座位数据文件
-            File seatsFile = new File(getContext().getFilesDir(), "library_seats.json");
+            File seatsFile = new File(getContext().getFilesDir(), "library_seats_floor" + currentFloor + ".json");
             if (seatsFile.exists()) {
                 BufferedReader reader = new BufferedReader(new FileReader(seatsFile));
                 StringBuilder builder = new StringBuilder();
@@ -99,7 +176,7 @@ public class SeatsFragment extends Fragment {
                 reader.close();
                 jsonString = builder.toString();
             } else {
-                // 如果文件不存在，从raw资源中读取
+                // 如果文件不存在，从raw资源中读取（暂时使用同一个文件，后续可以为每层创建不同的文件）
                 InputStream inputStream = getResources().openRawResource(R.raw.library_seats);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                 StringBuilder builder = new StringBuilder();
@@ -109,6 +186,11 @@ public class SeatsFragment extends Fragment {
                 }
                 reader.close();
                 jsonString = builder.toString();
+                
+                // 修改JSON中的楼层信息
+                JSONObject jsonObject = new JSONObject(jsonString);
+                jsonObject.put("floor", currentFloor);
+                jsonString = jsonObject.toString();
             }
 
             JSONObject jsonObject = new JSONObject(jsonString);
@@ -194,7 +276,7 @@ public class SeatsFragment extends Fragment {
 
                 // 创建预约详情对话框
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
-                builder.setTitle(getString(R.string.seat) + " " + x + "-" + y);
+                builder.setTitle(getString(R.string.seat) + " " + currentFloor + "-" + x + "-" + y);
 
                 StringBuilder message = new StringBuilder();
                 if (reservationsArray.length() == 0) {
@@ -253,9 +335,18 @@ public class SeatsFragment extends Fragment {
                         boolean isCheckedOut = reservationObj.optBoolean("checkedOut", false);
                         if (!isCheckedOut) {
                             String seatId = reservationObj.getString("seatId");
-                            // 解析座位ID，格式为"x-y"
+                            // 解析座位ID，格式为"floor-x-y"
                             String[] parts = seatId.split("-");
-                            if (parts.length == 2) {
+                            if (parts.length == 3) {
+                                int reservedFloor = Integer.parseInt(parts[0]);
+                                int reservedX = Integer.parseInt(parts[1]);
+                                int reservedY = Integer.parseInt(parts[2]);
+                                
+                                if (reservedFloor == currentFloor && reservedX == x && reservedY == y) {
+                                    reservationsArray.put(reservationObj);
+                                }
+                            } else if (parts.length == 2) {
+                                // 兼容旧格式
                                 int reservedX = Integer.parseInt(parts[0]);
                                 int reservedY = Integer.parseInt(parts[1]);
                                 
@@ -401,7 +492,7 @@ public class SeatsFragment extends Fragment {
                         if (userObj.getString("username").equals(username)) {
                             JSONArray userReservationsArray = userObj.getJSONArray("reservations");
                             JSONObject newReservation = new JSONObject();
-                            newReservation.put("seatId", x + "-" + y);
+                            newReservation.put("seatId", currentFloor + "-" + x + "-" + y);
                             newReservation.put("date", date);
                             newReservation.put("startTime", startTime);
                             newReservation.put("endTime", endTime);
@@ -457,9 +548,24 @@ public class SeatsFragment extends Fragment {
                     boolean isCheckedOut = reservationObj.optBoolean("checkedOut", false);
                     if (!isCheckedOut) {
                         String seatId = reservationObj.getString("seatId");
-                        // 解析座位ID，格式为"x-y"
+                        // 解析座位ID，格式为"floor-x-y"
                         String[] parts = seatId.split("-");
-                        if (parts.length == 2) {
+                        if (parts.length == 3) {
+                            int floor = Integer.parseInt(parts[0]);
+                            int x = Integer.parseInt(parts[1]) - 1; // 转换为0-based索引
+                            int y = Integer.parseInt(parts[2]) - 1;
+                            
+                            // 只更新当前楼层的座位
+                            if (floor == currentFloor && x >= 0 && x < gridLayout.getRowCount() && y >= 0 && y < gridLayout.getColumnCount()) {
+                                View seat = gridLayout.getChildAt(x * gridLayout.getColumnCount() + y);
+                                if (seat instanceof ImageButton) {
+                                    ImageButton seatButton = (ImageButton) seat;
+                                    // 可以设置不同的图标或颜色来表示预约状态
+                                    seatButton.setColorFilter(0xFFFF0000); // 红色表示已预约
+                                }
+                            }
+                        } else if (parts.length == 2) {
+                            // 兼容旧格式
                             int x = Integer.parseInt(parts[0]) - 1; // 转换为0-based索引
                             int y = Integer.parseInt(parts[1]) - 1;
                             
